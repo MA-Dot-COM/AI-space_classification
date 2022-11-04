@@ -3,19 +3,34 @@ import keras
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
+import urllib.request
+import time
+from PIL import Image
 
-def space_classification(image):
-    path = './space_data'
+def img_download(url):
+    # time check
+    start = time.time()
+
+    img_path = "./space_classification/img/test.jpg"
+    # 이미지 요청 및 다운로드
+    urllib.request.urlretrieve(url, img_path)
+
+    # 이미지 다운로드 시간 체크
+    print(time.time() - start)
+
+    return img_path
+
+def space_classification(image_path, classification_model):
+    path = './space_classification/space_data'
     class_names = os.listdir(path)
 
-    classification_model = tf.keras.models.load_model('./space_classification_model/space_classification_model.hdf5')
     img = keras.preprocessing.image.load_img(
-        image, target_size=(224, 224)
+        image_path, target_size=(224, 224)
     )
     img_array = keras.preprocessing.image.img_to_array(img)
     img_array = tf.expand_dims(img_array, 0)
     predictions = classification_model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    return print(class_names[np.argmax(score)])
+    return class_names[np.argmax(score)]
 
