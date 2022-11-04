@@ -9,10 +9,10 @@ import tensorflow as tf
 classification_model = tf.keras.models.load_model('./space_classification/space_classification_model/space_classification_model.hdf5')
 
 class Item(BaseModel):
-    name: str
-    price: float
+    name: Union[str, None] = None
+    price: Union[float, None] = None
+    url: str
     is_offer: Union[bool, None] = None
-
 
 @app.get("/")
 def read_root():
@@ -20,9 +20,10 @@ def read_root():
 
 
 from space_classification.space_classification import space_classification, img_download
-@app.get("/test")
-def test_model():
-    url = "https://dispatch.cdnser.be/cms-content/uploads/2020/04/09/a26f4b7b-9769-49dd-aed3-b7067fbc5a8c.jpg"
+@app.put("/test")
+def test_model(item: Item):
+    url = item.url
+    # url = "https://dispatch.cdnser.be/cms-content/uploads/2020/04/09/a26f4b7b-9769-49dd-aed3-b7067fbc5a8c.jpg"
     img_path = img_download(url)
     print(img_path)
     return space_classification(img_path,classification_model)
