@@ -4,8 +4,6 @@ import numpy as np
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 
-
-
 def space_classification(image):
     path = './space_data'
     class_names = os.listdir(path)
