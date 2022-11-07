@@ -1,6 +1,5 @@
 .idea/
 __pycache__/
-space_classification/space_classification_model/
-space_classification/space_data/
+space_classification/space_classification_model/*.hdf5
 space_classification/testimage/
 space_classification/img/*.jpg
