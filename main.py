@@ -1,7 +1,7 @@
 from typing import Union
-
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
 
@@ -25,8 +25,11 @@ def test_model(item: Item):
     url = item.url
     # url = "https://dispatch.cdnser.be/cms-content/uploads/2020/04/09/a26f4b7b-9769-49dd-aed3-b7067fbc5a8c.jpg"
     img_path = img_download(url)
-    print(img_path)
-    return space_classification(img_path,classification_model)
+    classification = space_classification(img_path, classification_model)
+    # json으로 호환 가능하게 데이터 타입을 바꿔주는 인코더
+    classification_jsonable = jsonable_encoder(classification)
+    # json.dumps(classification_jsonable)
+    return {"space":classification_jsonable}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
