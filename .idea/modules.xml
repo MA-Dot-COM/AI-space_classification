@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SORHIVE_AI.iml" filepath="$PROJECT_DIR$/.idea/SORHIVE_AI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AI-space_classification.iml" filepath="$PROJECT_DIR$/.idea/AI-space_classification.iml" />
     </modules>
   </component>
 </project>
