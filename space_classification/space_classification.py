@@ -1,4 +1,5 @@
 import os
+import json
 import keras
 import numpy as np
 import tensorflow as tf
@@ -21,8 +22,11 @@ def img_download(url):
     return img_path
 
 def space_classification(image_path, classification_model):
-    path = './space_classification/space_data'
-    class_names = os.listdir(path)
+
+    class_names=[]
+    with open("./space_classification/space_class_names.json", "r") as f:
+        data = json.load(f)
+    class_names=data['space_class_names']
 
     img = keras.preprocessing.image.load_img(
         image_path, target_size=(224, 224)
