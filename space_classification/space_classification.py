@@ -36,5 +36,5 @@ def space_classification(image_path, classification_model):
     predictions = classification_model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    return np.argmax(score)
+    return int(np.argmax(score))
 
