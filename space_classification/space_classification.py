@@ -12,7 +12,8 @@ def img_download(url):
     start = time.time()
     img_path_list = []
     for cnt, i in enumerate(url):
-        img_path = f"./space_classification/img/test{cnt+1}.jpg"
+        cnt += 1
+        img_path = f"./space_classification/img/test{cnt}.jpg"
         # 이미지 요청 및 다운로드
         urllib.request.urlretrieve(i, img_path)
         img_path_list.append(img_path)
@@ -40,12 +41,14 @@ def space_classification(image_path, classification_model):
         #class , score 각각 list로 저장
         best_class.append(np.argmax(score))
         best_score.append(score[np.argmax(score)].numpy())
-
+        print(best_class)
+        print(best_score)
     # 사진이 여러개 일경우
-    if len(best_class) >= 2:
+    if len(best_class) > 2:
 
         #최빈값 비교
         counts = collections.Counter(best_class)
+
         #최빈값 중복시 평균값 비교후 높은값 추론
         counts_most_two = counts.most_common(2)
         if counts_most_two[0][1] == counts_most_two[1][1]:
@@ -66,7 +69,8 @@ def space_classification(image_path, classification_model):
             else:
                 final_class = counts_most_two[1][0]
 
+
     else:
-        counts = collections.Counter(best_class)
-        final_class = counts.most_common(1)[0][0]
+        final_class = best_class.index(max(best_class))
+
     return class_names[final_class]
