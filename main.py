@@ -21,7 +21,7 @@ def read_root():
 
 
 from space_classification.space_classification import space_classification, img_download
-@app.get("/test")
+@app.put("/test")
 def test_model(item: dict):
     url = item['url']
 
