@@ -32,4 +32,18 @@ def space_classification(image_path, classification_model):
     predictions = classification_model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    return int(np.argmax(score))
+    class NumpyEncoder(json.JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj, np.ndarray):
+                return obj.tolist()
+            return json.JSONEncoder.default(self, obj)
+
+    best_score = sorted(score, reverse=True)[0:3]
+    best_score = np.array(best_score)
+    best_score = json.dumps(best_score, cls=NumpyEncoder)
+
+    best_category = np.argsort(score)[:4:-1]
+    best_category = json.dumps(best_category, cls=NumpyEncoder)
+
+    return best_category, best_score
+
