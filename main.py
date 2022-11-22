@@ -28,13 +28,15 @@ def test_model(item: Item):
     category, score = space_classification(image_path, classification_model)
 
     # json으로 호환 가능하게 데이터 타입을 바꿔주는 인코더
-    # category_jsonable = jsonable_encoder(category)
+    category_jsonable = jsonable_encoder(category)
     # category_jsonable = json.dumps(category_jsonable)
-    #
-    # score_jsonable = jsonable_encoder(score)
+
+    score_jsonable = jsonable_encoder(score)
     # score_jsonable = json.dumps(score_jsonable)
 
-    return {"lifing": category, "score": score}
+    return {"lifing": category_jsonable, "score": score_jsonable}
+
+
 
 
 @app.get("/items/{item_id}")
