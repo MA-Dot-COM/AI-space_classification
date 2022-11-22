@@ -21,7 +21,7 @@ def read_root():
 
 
 from space_classification.space_classification import space_classification, img_download
-@app.put("/test")
+@app.post("/test")
 def test_model(item: Item):
     url = item.url
     image_path = img_download(url)
@@ -29,12 +29,11 @@ def test_model(item: Item):
 
     # json으로 호환 가능하게 데이터 타입을 바꿔주는 인코더
     category_jsonable = jsonable_encoder(category)
-    # category_jsonable = json.dumps(category_jsonable)
-
+    # category_jsonable = json.dumps(category)
     score_jsonable = jsonable_encoder(score)
-    # score_jsonable = json.dumps(score_jsonable)
-
+    # score_jsonable = json.dumps(score)
     return {"lifing": category_jsonable, "score": score_jsonable}
+
 
 
 
