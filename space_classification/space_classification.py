@@ -13,16 +13,16 @@ def img_download(url):
     # 이미지 요청 및 다운로드
     urllib.request.urlretrieve(url, img_path)
     # 이미지 다운로드 시간 체크
-    print(time.time() - start)
+    # print(time.time() - start)
 
     return img_path
 
 def space_classification(image_path, classification_model):
 
-    class_names = []
-    with open("./space_classification/space_class_names.json", "r") as f:
-        data = json.load(f)
-    class_names = data['space_class_names']
+    # class_names = []
+    # with open("./space_classification/space_class_names.json", "r") as f:
+    #     data = json.load(f)
+    # class_names = data['space_class_names']
 
     img = keras.preprocessing.image.load_img(
         image_path, target_size=(224, 224)
@@ -32,18 +32,12 @@ def space_classification(image_path, classification_model):
     predictions = classification_model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    class NumpyEncoder(json.JSONEncoder):
-        def default(self, obj):
-            if isinstance(obj, np.ndarray):
-                return obj.tolist()
-            return json.JSONEncoder.default(self, obj)
-
     best_score = sorted(score, reverse=True)[0:3]
     best_score = np.array(best_score)
-    best_score = json.dumps(best_score, cls=NumpyEncoder)
+    best_score = list(best_score)
 
     best_category = np.argsort(score)[:4:-1]
-    best_category = json.dumps(best_category, cls=NumpyEncoder)
+    best_category = list(best_category)
 
     return best_category, best_score
 
