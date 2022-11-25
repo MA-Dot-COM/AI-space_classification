@@ -31,11 +31,11 @@ def space_classification(image_path, classification_model):
     img_array = tf.expand_dims(img_array, 0)
     predictions = classification_model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
-
+    print(score)
     best_score = sorted(score, reverse=True)[0:3]
     best_score = np.array(best_score)
     best_score = list(best_score)
-
+    print(best_score)
     best_category = np.argsort(score)[:4:-1]
     best_category = list(best_category)
 

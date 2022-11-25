@@ -7,7 +7,7 @@ import json
 app = FastAPI()
 
 import tensorflow as tf
-classification_model = tf.keras.models.load_model('./space_classification/space_classification_model/space_classification_model.hdf5')
+classification_model = tf.keras.models.load_model('./space_classification/space_classification_model/space_resnet50model_blur.hdf5')
 
 class Item(BaseModel):
     name: Union[str, None] = None
